@@ -205,7 +205,20 @@ export default function Experience() {
           start: "top top",
           end: "+=5000",
           scrub: 1,
-          pin: true
+          pin: true,
+          onUpdate: (self) => {
+            const expEl = document.getElementById("experience");
+            const contactEl = document.getElementById("contact");
+            if (expEl && contactEl) {
+              if (self.progress > 0.85) {
+                expEl.style.pointerEvents = "none";
+                contactEl.style.zIndex = "20"; // Bring Contact to the very front so nothing can block it
+              } else {
+                expEl.style.pointerEvents = "auto";
+                contactEl.style.zIndex = "5"; // Put it back behind Experience
+              }
+            }
+          }
         }
       });
 
@@ -257,7 +270,7 @@ export default function Experience() {
       {/* Solid Background to hide next section until zoomed in */}
       <div className="exp-bg" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: '#050816', zIndex: -1 }}></div>
 
-      <div className="experience-content" style={{ zIndex: 10, width: '50%', background: 'rgba(5, 8, 22, 0.4)', padding: '50px', borderRadius: '24px', backdropFilter: 'blur(12px)', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+      <div className="experience-content" style={{ position: 'relative', zIndex: 10, width: '50%', background: 'rgba(5, 8, 22, 0.4)', padding: '50px', borderRadius: '24px', backdropFilter: 'blur(12px)', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
         <h1 style={{ fontSize: '4rem', marginBottom: '10px', textShadow: '0 0 20px rgba(255,255,255,0.3)', lineHeight: '1.1' }}>Projects & Experience</h1>
         <p style={{ color: '#ec4899', fontSize: '1.2rem', marginBottom: '30px', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 'bold' }}>ZUP Examination Platform</p>
         

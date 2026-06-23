@@ -47,6 +47,7 @@ export default function Contact() {
     >
       <div
         style={{
+          position: 'relative',
           zIndex: 10,
           background: 'rgba(5, 8, 22, 0.4)',
           padding: '50px',
@@ -127,13 +128,16 @@ export default function Contact() {
             </div>
           </a>
 
-          <div className="contact-card">
+          <a
+            href="tel:+919302410770"
+            className="contact-card"
+          >
             <div className="contact-icon">📱</div>
             <div className="contact-info">
-              <h3>Phone</h3>
-              <p>+91 9302410770</p>
+               <h3>Phone</h3>
+               <p>+91 9302410770</p>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>

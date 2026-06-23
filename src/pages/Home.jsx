@@ -282,7 +282,20 @@ export default function Home() {
           start: "top top",
           end: "+=5000", // Increased distance for much slower, smoother scrolling
           scrub: 1,
-          pin: true
+          pin: true,
+          onUpdate: (self) => {
+            const homeEl = document.getElementById("home");
+            const aboutEl = document.getElementById("about");
+            if (homeEl && aboutEl) {
+              if (self.progress > 0.85) {
+                homeEl.style.pointerEvents = "none";
+                aboutEl.style.zIndex = "20"; // Bring About to the very front so nothing can block it
+              } else {
+                homeEl.style.pointerEvents = "auto";
+                aboutEl.style.zIndex = "5"; // Put it back behind Home
+              }
+            }
+          }
         }
       });
 
