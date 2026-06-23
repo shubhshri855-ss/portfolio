@@ -1,0 +1,326 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background: #050816;
+  color: white;
+  overflow-x: hidden;
+}
+
+.home {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Navbar */
+
+.navbar {
+  width: 100%;
+  height: 60px;
+  padding: 0 8%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #8b5cf6;
+}
+
+.navbar ul {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+
+}
+
+.navbar li {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.navbar li:hover {
+  color: #8b5cf6;
+}
+
+/* Hero */
+
+.hero {
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 8%;
+
+  position: relative;
+}
+
+.hero-content {
+  width: 50%;
+  z-index: 10;
+  background: rgba(5, 8, 22, 0.4);
+  /* Glassmorphism background */
+  padding: 40px;
+  margin-top: 80px;
+  border-radius: 24px;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content span {
+  display: inline-block;
+  margin-top: 10px;
+  /* Bring it down slightly */
+  margin-bottom: 10px;
+  color: #00f0ff;
+  /* Bright Neon Cyan */
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+
+  /* Make it a premium badge */
+  background: rgba(0, 240, 255, 0.1);
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+}
+
+.hero-content h1 {
+  font-size: 5rem;
+  line-height: 1.1;
+  margin: 20px 0;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+
+
+.hero-buttons {
+  margin-top: 40px;
+  display: flex;
+  gap: 20px;
+}
+
+.hero-buttons button {
+  padding: 15px 35px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.primary-btn {
+  background: #8b5cf6;
+  color: white;
+}
+
+.primary-btn:hover {
+  transform: translateY(-5px);
+}
+
+.secondary-btn {
+  background: transparent;
+  border: 1px solid #8b5cf6 !important;
+  color: white;
+}
+
+.secondary-btn:hover {
+  background: #8b5cf6;
+}
+
+.webgl {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+/* Contact Card Styles */
+.contact-card {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px 30px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.3s ease;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.contact-card:hover {
+  background: rgba(139, 92, 246, 0.2);
+  border-color: #8b5cf6;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+}
+
+.contact-icon {
+  font-size: 2.5rem;
+}
+
+.contact-info {
+  text-align: left;
+}
+
+.contact-info h3 {
+  font-size: 1.5rem;
+  color: #8b5cf6;
+  margin-bottom: 5px;
+}
+
+.contact-info p {
+  font-size: 1.1rem;
+  color: #ccc;
+  word-break: break-all;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  /* Navbar */
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 15px 5%;
+    gap: 10px;
+    background: rgba(5, 8, 22, 0.8);
+  }
+  .navbar .logo {
+    font-size: 1.5rem;
+  }
+  .navbar ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  .navbar li {
+    font-size: 0.9rem;
+  }
+
+  /* Hero Section */
+  .hero {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  .hero-content {
+    width: 90%;
+    padding: 30px;
+    margin-top: 50px;
+  }
+  .hero-content h1 {
+    font-size: 3rem;
+  }
+  .hero-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* About Section */
+  #about {
+    padding: 120px 5% 50px 5% !important;
+  }
+  .about-content {
+    padding: 30px !important;
+  }
+  .about-content h2 {
+    font-size: 2.5rem !important;
+  }
+  .about-text p {
+    font-size: 1rem !important;
+  }
+  .about-content span {
+    font-size: 0.9rem !important;
+  }
+
+  /* Experience Section */
+  #experience {
+    padding: 80px 5% 20px 5% !important;
+    justify-content: center !important;
+  }
+  .experience-content {
+    width: 95% !important;
+    padding: 20px !important;
+    text-align: center !important;
+    margin-top: 40px;
+  }
+  .experience-content h1 {
+    font-size: 2rem !important;
+    margin-bottom: 5px !important;
+  }
+  .experience-content p {
+    font-size: 0.9rem !important;
+    margin-bottom: 10px !important;
+    line-height: 1.4 !important;
+  }
+  .experience-content strong {
+    font-size: 1rem !important;
+    margin-bottom: 5px !important;
+  }
+  .experience-content > div {
+    margin-bottom: 15px !important;
+    margin-top: 15px !important;
+  }
+  .exp-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px !important;
+    margin-top: 15px !important;
+  }
+  .exp-links a {
+    padding: 8px 15px !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* Contact Section */
+  #contact {
+    padding: 100px 5% 50px 5% !important;
+  }
+  #contact > div {
+    padding: 30px !important;
+  }
+  #contact h2 {
+    font-size: 2.5rem !important;
+  }
+  .contact-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    padding: 15px !important;
+  }
+  .contact-info {
+    text-align: center;
+  }
+  .contact-info p {
+    font-size: 0.9rem !important;
+  }
+}
