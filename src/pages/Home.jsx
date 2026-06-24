@@ -92,8 +92,8 @@ export default function Home() {
     // ==========================================
     const planetWrapper = new THREE.Group();
     const isMobile = window.innerWidth <= 900;
-    const initialPlanetX = isMobile ? 0 : 2.5;
-    const initialPlanetY = isMobile ? -10 : 0; // Hide completely below the screen on mobile
+    const initialPlanetX = isMobile ? 10 : 2.5; // Hidden on mobile, right side of box on desktop
+    const initialPlanetY = 0; 
     planetWrapper.position.set(initialPlanetX, initialPlanetY, 0);
     scene.add(planetWrapper);
 
@@ -266,7 +266,7 @@ export default function Home() {
         }
       });
 
-      // 1. On mobile: move box UP. On desktop: move box LEFT.
+      // 1. Box goes OUT
       tl.to(".hero-content", { 
         opacity: 0, 
         x: isMobile ? 0 : -150, 
@@ -275,36 +275,43 @@ export default function Home() {
         ease: "power2.inOut" 
       }, 0);
 
-      // 2. Bring model to center (On mobile: it comes after box goes up)
+      // 2. Model comes IN from the side to the center
       tl.to(planetWrapper.position, { 
         x: 0, 
         y: 0, 
         duration: 4, 
         ease: "power1.inOut" 
-      }, isMobile ? 2 : 0);
+      }, 2);
 
-      // NEW: Dynamic Scroll Animations to keep user engaged!
-      // Spin the entire wireframe group dynamically based on scroll progress
-      tl.to(planetGroup.rotation, { y: Math.PI * 4, x: Math.PI * 2, duration: 12, ease: "power2.inOut" }, 0);
+      // NEW: Dynamic Scroll Animations
+      tl.to(planetGroup.rotation, { y: Math.PI * 4, x: Math.PI * 2, duration: 15, ease: "power2.inOut" }, 0);
+      tl.to(universe.position, { z: 5, duration: 15, ease: "power1.in" }, 0);
+      tl.to(material, { size: 0.15, duration: 15, yoyo: true, ease: "none" }, 0);
+
+      // PROFESSIONAL COLOR MORPHING (Scroll-based)
+      tl.to(lineMat.color, { r: 1, g: 0, b: 0.5, duration: 15, ease: "none" }, 0);
+      tl.to(wireMat.color, { r: 1, g: 0.3, b: 0, duration: 15, ease: "none" }, 0);
+      tl.to(pMat.color, { r: 1, g: 0.9, b: 0.1, duration: 15, ease: "none" }, 0);
       
-      // Show Motivational Quote during the scroll
-      tl.to(".home-quote", { opacity: 1, y: -20, duration: 3, ease: "power1.out" }, 3);
-      tl.to(".home-quote", { opacity: 0, y: -40, duration: 2, ease: "power1.in" }, 7);
+      tl.to(".hero-content span", { color: "#ff007f", borderColor: "rgba(255,0,127,0.4)", backgroundColor: "rgba(255,0,127,0.1)", textShadow: "0 0 10px rgba(255,0,127,0.6)", duration: 2 }, 0);
+      tl.to(".primary-btn", { background: "#ff007f", boxShadow: "0 0 20px rgba(255,0,127,0.5)", duration: 2 }, 0);
+      tl.to(".secondary-btn", { borderColor: "#ff7b00", color: "#ff7b00", boxShadow: "0 0 15px rgba(255,123,0,0.2)", duration: 2 }, 0);
+
+      // 3. Model zooms/scales up (After it reaches center)
+      tl.to(planetWrapper.scale, { x: 50, y: 50, z: 50, duration: 6, ease: "power3.in" }, 6);
       
-      // Make the background particles rush towards the screen (warp speed effect)
-      tl.to(universe.position, { z: 5, duration: 10, ease: "power1.in" }, 0);
-      tl.to(material, { size: 0.15, duration: 5, yoyo: true, ease: "none" }, 0);
+      // 4. Motivational Quote fades in ONLY AFTER the model has zoomed up
+      tl.to(".home-quote", { opacity: 1, y: -20, duration: 2, ease: "power1.out" }, 11);
+      tl.to(".home-quote h2", { textShadow: "0 0 40px rgba(255,123,0,0.9)", duration: 2, ease: "none" }, 11);
+      tl.to(".home-quote p", { color: "#ff7b00", duration: 2, ease: "none" }, 11);
 
-      // 3. Scale up planet hugely (entering the sphere)
-      // Using power3.in makes it grow VERY slowly at first, and rapidly at the very end (perfect 3D zoom effect)
-      tl.to(planetWrapper.scale, { x: 50, y: 50, z: 50, duration: 10, ease: "power3.in" }, 2);
-
-      // 4. Fade out core to reveal the inside
-      tl.to(coreMat, { opacity: 0, transparent: true, duration: 4, ease: "none" }, 7);
-      tl.to(lineMat, { opacity: 0, transparent: true, duration: 4, ease: "none" }, 7);
-      tl.to(wireMat, { opacity: 0, duration: 4, ease: "none" }, 7);
-      tl.to(pMat, { opacity: 0, duration: 4, ease: "none" }, 7);
-      tl.to(".home-bg", { opacity: 0, duration: 4, ease: "none" }, 7); // Fade background to reveal About
+      // 5. Fade everything out to reveal the next page
+      tl.to(".home-quote", { opacity: 0, y: -40, duration: 2, ease: "power1.in" }, 14);
+      tl.to(coreMat, { opacity: 0, transparent: true, duration: 2, ease: "none" }, 14);
+      tl.to(lineMat, { opacity: 0, transparent: true, duration: 2, ease: "none" }, 14);
+      tl.to(wireMat, { opacity: 0, duration: 2, ease: "none" }, 14);
+      tl.to(pMat, { opacity: 0, duration: 2, ease: "none" }, 14);
+      tl.to(".home-bg", { opacity: 0, duration: 2, ease: "none" }, 14);
     });
 
     // Resize Handler

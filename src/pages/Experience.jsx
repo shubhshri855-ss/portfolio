@@ -69,9 +69,8 @@ export default function Experience() {
     // ==========================================
     const planetWrapper = new THREE.Group();
     const isMobile = window.innerWidth <= 900;
-    // Hide completely below the screen on mobile
-    const initialPlanetX = isMobile ? 0 : 2.5;
-    const initialPlanetY = isMobile ? -10 : 0;
+    const initialPlanetX = isMobile ? 10 : 2.5; // Hidden on mobile, right side of box on desktop
+    const initialPlanetY = 0;
     planetWrapper.position.set(initialPlanetX, initialPlanetY, 0);
     scene.add(planetWrapper);
 
@@ -224,40 +223,48 @@ export default function Experience() {
         }
       });
 
-      // Add a small pause at the beginning so the user can read the Experience text
-      // 1. On mobile: move box UP. On desktop: move box LEFT. (Starts at 2)
+      // 1. Box goes OUT
       tl.to(".experience-content", { 
         opacity: 0, 
         x: isMobile ? 0 : -150, 
         y: isMobile ? -300 : 0, 
         duration: 2, 
         ease: "power2.inOut" 
-      }, 2);
+      }, 0);
 
-      // 2. Bring model to center (On mobile: it comes after box goes up, starts at 4)
+      // 2. Bring model to center from the side
       tl.to(planetWrapper.position, { 
         x: 0, 
         y: 0, 
         duration: 4, 
         ease: "power1.inOut" 
-      }, isMobile ? 4 : 2);
+      }, 2);
 
       // NEW: Add aggressive rotations and warp speed effect during scroll!
-      tl.to(planetGroup.rotation, { y: Math.PI * 4, x: -Math.PI * 2, duration: 12, ease: "power2.inOut" }, 2);
-      tl.to(universe.position, { z: 5, duration: 10, ease: "power1.in" }, 2);
+      tl.to(planetGroup.rotation, { y: Math.PI * 4, x: -Math.PI * 2, duration: 15, ease: "power2.inOut" }, 0);
+      tl.to(universe.position, { z: 5, duration: 15, ease: "power1.in" }, 0);
 
-      // Show Motivational Quote during the scroll
-      tl.to(".exp-quote", { opacity: 1, y: -20, duration: 3, ease: "power1.out" }, 5);
-      tl.to(".exp-quote", { opacity: 0, y: -40, duration: 2, ease: "power1.in" }, 9);
+      // PROFESSIONAL COLOR MORPHING (Scroll-based)
+      tl.to(wireMat.color, { r: 0, g: 0.8, b: 1, duration: 15, ease: "none" }, 0);
+      tl.to(pMat.color, { r: 0.6, g: 0.1, b: 1, duration: 15, ease: "none" }, 0);
+      
+      tl.to(".exp-links a:first-child", { background: "#00e676", boxShadow: "0 5px 20px rgba(0,230,118,0.5)", borderColor: "#00e676", duration: 2 }, 0);
+      tl.to(".exp-links a:last-child", { borderColor: "#00f0ff", color: "#00f0ff", boxShadow: "0 5px 15px rgba(0,240,255,0.3)", duration: 2 }, 0);
 
-      // 3. Scale up planet hugely (entering the sphere)
-      tl.to(planetWrapper.scale, { x: 50, y: 50, z: 50, duration: 10, ease: "power3.in" }, 4);
+      // 3. Model zooms/scales up after reaching center
+      tl.to(planetWrapper.scale, { x: 50, y: 50, z: 50, duration: 6, ease: "power3.in" }, 6);
 
-      // 4. Fade out core to reveal the inside (Contact section)
-      tl.to(coreMat, { opacity: 0, transparent: true, duration: 4, ease: "none" }, 10);
-      tl.to(wireMat, { opacity: 0, duration: 4, ease: "none" }, 10);
-      tl.to(pMat, { opacity: 0, duration: 4, ease: "none" }, 10);
-      tl.to(".exp-bg", { opacity: 0, duration: 4, ease: "none" }, 10); // Fade background to reveal Contact
+      // 4. Motivational Quote fades in ONLY AFTER model has zoomed
+      tl.to(".exp-quote", { opacity: 1, y: -20, duration: 2, ease: "power1.out" }, 11);
+      tl.to(".exp-quote h2", { textShadow: "0 0 40px rgba(0,240,255,0.9)", duration: 2, ease: "none" }, 11);
+      tl.to(".exp-quote p", { color: "#00f0ff", duration: 2, ease: "none" }, 11);
+      
+      // 5. Fade out everything to reveal Contact section
+      tl.to(".exp-quote", { opacity: 0, y: -40, duration: 2, ease: "power1.in" }, 14);
+      tl.to(coreMat, { opacity: 0, transparent: true, duration: 2, ease: "none" }, 14);
+      tl.to(wireMat, { opacity: 0, duration: 2, ease: "none" }, 14);
+      tl.to(pMat, { opacity: 0, duration: 2, ease: "none" }, 14);
+      tl.to(".exp-bg", { opacity: 0, duration: 2, ease: "none" }, 14);
     });
 
     const handleResize = () => { 
