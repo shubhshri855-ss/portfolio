@@ -68,9 +68,11 @@ export default function Experience() {
     // 🌍 FOREGROUND PLANET (Right Side)
     // ==========================================
     const planetWrapper = new THREE.Group();
-    // Position it further right on mobile so it doesn't peek out
-    const initialPlanetX = window.innerWidth <= 900 ? 5 : 2.5;
-    planetWrapper.position.set(initialPlanetX, 0, 0);
+    const isMobile = window.innerWidth <= 900;
+    // Hide completely below the screen on mobile
+    const initialPlanetX = isMobile ? 0 : 2.5;
+    const initialPlanetY = isMobile ? -10 : 0;
+    planetWrapper.position.set(initialPlanetX, initialPlanetY, 0);
     scene.add(planetWrapper);
 
     const planetGroup = new THREE.Group();
@@ -223,15 +225,30 @@ export default function Experience() {
       });
 
       // Add a small pause at the beginning so the user can read the Experience text
-      // 1. Fade out side details and push them left (Starts at 2 instead of 0)
-      tl.to(".experience-content", { opacity: 0, x: -150, duration: 2, ease: "power2.inOut" }, 2);
+      // 1. On mobile: move box UP. On desktop: move box LEFT. (Starts at 2)
+      tl.to(".experience-content", { 
+        opacity: 0, 
+        x: isMobile ? 0 : -150, 
+        y: isMobile ? -300 : 0, 
+        duration: 2, 
+        ease: "power2.inOut" 
+      }, 2);
 
-      // 2. Move planetWrapper to center of the screen (Starts at 2)
-      tl.to(planetWrapper.position, { x: 0, duration: 4, ease: "power1.inOut" }, 2);
+      // 2. Bring model to center (On mobile: it comes after box goes up, starts at 4)
+      tl.to(planetWrapper.position, { 
+        x: 0, 
+        y: 0, 
+        duration: 4, 
+        ease: "power1.inOut" 
+      }, isMobile ? 4 : 2);
 
       // NEW: Add aggressive rotations and warp speed effect during scroll!
       tl.to(planetGroup.rotation, { y: Math.PI * 4, x: -Math.PI * 2, duration: 12, ease: "power2.inOut" }, 2);
       tl.to(universe.position, { z: 5, duration: 10, ease: "power1.in" }, 2);
+
+      // Show Motivational Quote during the scroll
+      tl.to(".exp-quote", { opacity: 1, y: -20, duration: 3, ease: "power1.out" }, 5);
+      tl.to(".exp-quote", { opacity: 0, y: -40, duration: 2, ease: "power1.in" }, 9);
 
       // 3. Scale up planet hugely (entering the sphere)
       tl.to(planetWrapper.scale, { x: 50, y: 50, z: 50, duration: 10, ease: "power3.in" }, 4);
@@ -299,6 +316,31 @@ export default function Experience() {
           </a>
         </div>
       </div>
+      
+      {/* Scroll Quote (Initially hidden, shown during scroll) */}
+      <div className="exp-quote" style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        zIndex: 15,
+        opacity: 0,
+        pointerEvents: 'none',
+        textAlign: 'center',
+        width: '90%'
+      }}>
+        <h2 style={{
+          fontSize: '3rem',
+          color: '#fff',
+          textShadow: '0 0 20px rgba(236, 72, 153, 0.8)',
+          fontStyle: 'italic',
+          fontWeight: '600'
+        }}>
+          "First, solve the problem. Then, write the code."
+        </h2>
+        <p style={{ color: '#ec4899', marginTop: '10px', fontSize: '1.2rem', letterSpacing: '2px' }}>- John Johnson</p>
+      </div>
+
       <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }}></canvas>
     </div>
   );

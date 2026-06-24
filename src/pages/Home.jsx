@@ -91,8 +91,10 @@ export default function Home() {
     // 🏗️ ABSTRACT WIREFRAME STRUCTURE (Manual Vibe)
     // ==========================================
     const planetWrapper = new THREE.Group();
-    const initialPlanetX = window.innerWidth <= 900 ? 5 : 2.5;
-    planetWrapper.position.set(initialPlanetX, 0, 0);
+    const isMobile = window.innerWidth <= 900;
+    const initialPlanetX = isMobile ? 0 : 2.5;
+    const initialPlanetY = isMobile ? -10 : 0; // Hide completely below the screen on mobile
+    planetWrapper.position.set(initialPlanetX, initialPlanetY, 0);
     scene.add(planetWrapper);
 
     const planetGroup = new THREE.Group();
@@ -264,15 +266,30 @@ export default function Home() {
         }
       });
 
-      // 1. Fade out side details and push them left
-      tl.to(".hero-content", { opacity: 0, x: -150, duration: 2, ease: "power2.inOut" }, 0);
+      // 1. On mobile: move box UP. On desktop: move box LEFT.
+      tl.to(".hero-content", { 
+        opacity: 0, 
+        x: isMobile ? 0 : -150, 
+        y: isMobile ? -300 : 0, 
+        duration: 2, 
+        ease: "power2.inOut" 
+      }, 0);
 
-      // 2. Move planetWrapper to center of the screen
-      tl.to(planetWrapper.position, { x: 0, duration: 4, ease: "power1.inOut" }, 0);
+      // 2. Bring model to center (On mobile: it comes after box goes up)
+      tl.to(planetWrapper.position, { 
+        x: 0, 
+        y: 0, 
+        duration: 4, 
+        ease: "power1.inOut" 
+      }, isMobile ? 2 : 0);
 
       // NEW: Dynamic Scroll Animations to keep user engaged!
       // Spin the entire wireframe group dynamically based on scroll progress
       tl.to(planetGroup.rotation, { y: Math.PI * 4, x: Math.PI * 2, duration: 12, ease: "power2.inOut" }, 0);
+      
+      // Show Motivational Quote during the scroll
+      tl.to(".home-quote", { opacity: 1, y: -20, duration: 3, ease: "power1.out" }, 3);
+      tl.to(".home-quote", { opacity: 0, y: -40, duration: 2, ease: "power1.in" }, 7);
       
       // Make the background particles rush towards the screen (warp speed effect)
       tl.to(universe.position, { z: 5, duration: 10, ease: "power1.in" }, 0);
@@ -351,6 +368,30 @@ export default function Home() {
 
         {/* Three Canvas */}
         <canvas ref={canvasRef} className="webgl"></canvas>
+
+        {/* Scroll Quote (Initially hidden, shown during scroll) */}
+        <div className="home-quote" style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 15,
+          opacity: 0,
+          pointerEvents: 'none',
+          textAlign: 'center',
+          width: '90%'
+        }}>
+          <h2 style={{
+            fontSize: '3rem',
+            color: '#fff',
+            textShadow: '0 0 20px rgba(0, 240, 255, 0.8)',
+            fontStyle: 'italic',
+            fontWeight: '600'
+          }}>
+            "Talk is cheap. Show me the code."
+          </h2>
+          <p style={{ color: '#00f0ff', marginTop: '10px', fontSize: '1.2rem', letterSpacing: '2px' }}>- Linus Torvalds</p>
+        </div>
       </section>
     </div>
   );
