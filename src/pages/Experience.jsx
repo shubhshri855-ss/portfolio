@@ -203,7 +203,7 @@ export default function Experience() {
         scrollTrigger: {
           trigger: "#experience",
           start: "top top",
-          end: "+=5000",
+          end: "+=3500", // Reduced scroll distance to prevent boredom
           scrub: 1,
           pin: true,
           onUpdate: (self) => {
@@ -224,10 +224,14 @@ export default function Experience() {
 
       // Add a small pause at the beginning so the user can read the Experience text
       // 1. Fade out side details and push them left (Starts at 2 instead of 0)
-      tl.to(".experience-content", { opacity: 0, x: -100, duration: 2, ease: "none" }, 2);
+      tl.to(".experience-content", { opacity: 0, x: -150, duration: 2, ease: "power2.inOut" }, 2);
 
       // 2. Move planetWrapper to center of the screen (Starts at 2)
       tl.to(planetWrapper.position, { x: 0, duration: 4, ease: "power1.inOut" }, 2);
+
+      // NEW: Add aggressive rotations and warp speed effect during scroll!
+      tl.to(planetGroup.rotation, { y: Math.PI * 4, x: -Math.PI * 2, duration: 12, ease: "power2.inOut" }, 2);
+      tl.to(universe.position, { z: 5, duration: 10, ease: "power1.in" }, 2);
 
       // 3. Scale up planet hugely (entering the sphere)
       tl.to(planetWrapper.scale, { x: 50, y: 50, z: 50, duration: 10, ease: "power3.in" }, 4);
@@ -235,6 +239,7 @@ export default function Experience() {
       // 4. Fade out core to reveal the inside (Contact section)
       tl.to(coreMat, { opacity: 0, transparent: true, duration: 4, ease: "none" }, 10);
       tl.to(wireMat, { opacity: 0, duration: 4, ease: "none" }, 10);
+      tl.to(pMat, { opacity: 0, duration: 4, ease: "none" }, 10);
       tl.to(".exp-bg", { opacity: 0, duration: 4, ease: "none" }, 10); // Fade background to reveal Contact
     });
 
