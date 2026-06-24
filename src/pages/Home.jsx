@@ -92,7 +92,7 @@ export default function Home() {
     // ==========================================
     const planetWrapper = new THREE.Group();
     const isMobile = window.innerWidth <= 900;
-    const initialPlanetX = isMobile ? 10 : 2.5; // Hidden on mobile, right side of box on desktop
+    const initialPlanetX = isMobile ? 3.5 : 2.5; // Just off-screen on mobile, right side of box on desktop
     const initialPlanetY = 0; 
     planetWrapper.position.set(initialPlanetX, initialPlanetY, 0);
     scene.add(planetWrapper);
@@ -275,13 +275,13 @@ export default function Home() {
         ease: "power2.inOut" 
       }, 0);
 
-      // 2. Model comes IN from the side to the center
+      // 2. Model comes IN from the side to the center (starts almost immediately)
       tl.to(planetWrapper.position, { 
         x: 0, 
         y: 0, 
         duration: 4, 
         ease: "power1.inOut" 
-      }, 2);
+      }, 0.5);
 
       // NEW: Dynamic Scroll Animations
       tl.to(planetGroup.rotation, { y: Math.PI * 4, x: Math.PI * 2, duration: 15, ease: "power2.inOut" }, 0);
@@ -300,10 +300,10 @@ export default function Home() {
       // 3. Model zooms/scales up (After it reaches center)
       tl.to(planetWrapper.scale, { x: 50, y: 50, z: 50, duration: 6, ease: "power3.in" }, 6);
       
-      // 4. Motivational Quote fades in ONLY AFTER the model has zoomed up
-      tl.to(".home-quote", { opacity: 1, y: -20, duration: 2, ease: "power1.out" }, 11);
-      tl.to(".home-quote h2", { textShadow: "0 0 40px rgba(255,123,0,0.9)", duration: 2, ease: "none" }, 11);
-      tl.to(".home-quote p", { color: "#ff7b00", duration: 2, ease: "none" }, 11);
+      // 4. Motivational Quote fades in as soon as the model reaches the center
+      tl.to(".home-quote", { opacity: 1, y: -20, duration: 2, ease: "power1.out" }, 4.5);
+      tl.to(".home-quote h2", { textShadow: "0 0 40px rgba(255,123,0,0.9)", duration: 2, ease: "none" }, 4.5);
+      tl.to(".home-quote p", { color: "#ff7b00", duration: 2, ease: "none" }, 4.5);
 
       // 5. Fade everything out to reveal the next page
       tl.to(".home-quote", { opacity: 0, y: -40, duration: 2, ease: "power1.in" }, 14);

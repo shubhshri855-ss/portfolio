@@ -69,7 +69,7 @@ export default function Experience() {
     // ==========================================
     const planetWrapper = new THREE.Group();
     const isMobile = window.innerWidth <= 900;
-    const initialPlanetX = isMobile ? 10 : 2.5; // Hidden on mobile, right side of box on desktop
+    const initialPlanetX = isMobile ? 3.5 : 2.5; // Just off-screen on mobile, right side of box on desktop
     const initialPlanetY = 0;
     planetWrapper.position.set(initialPlanetX, initialPlanetY, 0);
     scene.add(planetWrapper);
@@ -232,13 +232,13 @@ export default function Experience() {
         ease: "power2.inOut" 
       }, 0);
 
-      // 2. Bring model to center from the side
+      // 2. Bring model to center from the side (starts almost immediately)
       tl.to(planetWrapper.position, { 
         x: 0, 
         y: 0, 
         duration: 4, 
         ease: "power1.inOut" 
-      }, 2);
+      }, 0.5);
 
       // NEW: Add aggressive rotations and warp speed effect during scroll!
       tl.to(planetGroup.rotation, { y: Math.PI * 4, x: -Math.PI * 2, duration: 15, ease: "power2.inOut" }, 0);
@@ -254,10 +254,10 @@ export default function Experience() {
       // 3. Model zooms/scales up after reaching center
       tl.to(planetWrapper.scale, { x: 50, y: 50, z: 50, duration: 6, ease: "power3.in" }, 6);
 
-      // 4. Motivational Quote fades in ONLY AFTER model has zoomed
-      tl.to(".exp-quote", { opacity: 1, y: -20, duration: 2, ease: "power1.out" }, 11);
-      tl.to(".exp-quote h2", { textShadow: "0 0 40px rgba(0,240,255,0.9)", duration: 2, ease: "none" }, 11);
-      tl.to(".exp-quote p", { color: "#00f0ff", duration: 2, ease: "none" }, 11);
+      // 4. Motivational Quote fades in as soon as the model reaches the center
+      tl.to(".exp-quote", { opacity: 1, y: -20, duration: 2, ease: "power1.out" }, 4.5);
+      tl.to(".exp-quote h2", { textShadow: "0 0 40px rgba(0,240,255,0.9)", duration: 2, ease: "none" }, 4.5);
+      tl.to(".exp-quote p", { color: "#00f0ff", duration: 2, ease: "none" }, 4.5);
       
       // 5. Fade out everything to reveal Contact section
       tl.to(".exp-quote", { opacity: 0, y: -40, duration: 2, ease: "power1.in" }, 14);
