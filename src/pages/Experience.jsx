@@ -209,11 +209,11 @@ export default function Experience() {
           pin: true,
           onUpdate: (self) => {
             const expEl = document.getElementById("experience");
-            const nextEl = document.getElementById("avatar-section");
+            const nextEl = document.getElementById("room-section");
             if (expEl && nextEl) {
               if (self.progress > 0.85) {
                 expEl.style.pointerEvents = "none";
-                nextEl.style.zIndex = "20"; // Bring Avatar to the very front so nothing can block it
+                nextEl.style.zIndex = "20"; // Bring Room to the very front so nothing can block it
               } else {
                 expEl.style.pointerEvents = "auto";
                 nextEl.style.zIndex = "5"; // Put it back behind Experience
