@@ -157,6 +157,28 @@ export default function AvatarSection() {
 
     // GSAP Scroll Animation
     let ctx = gsap.context(() => {
+
+      // Hint Animation (Fade in when section enters)
+      gsap.fromTo(".avatar-hint",
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1, y: 0, duration: 1.5, ease: "power2.out", delay: 0.5,
+          scrollTrigger: {
+            trigger: ".avatar-section",
+            start: "top 50%", 
+          }
+        }
+      );
+
+      // Pulse animation for the SVG icon
+      gsap.to(".avatar-hint svg", {
+        x: -5,
+        yoyo: true,
+        repeat: -1,
+        duration: 0.8,
+        ease: "power1.inOut"
+      });
+
       // ScrollTrigger Timeline
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -182,6 +204,7 @@ export default function AvatarSection() {
       });
 
       // 1. Avatar zooms/scales up (Scroll transition to next page)
+      tl.to(".avatar-hint", { opacity: 0, duration: 1, ease: "power1.inOut" }, 0);
       tl.to(avatarWrapper.scale, { x: 50, y: 50, z: 50, duration: 6, ease: "power3.in" }, 0);
       tl.to(avatarWrapper.position, { y: -25, duration: 6, ease: "power3.in" }, 0);
       
@@ -223,6 +246,31 @@ export default function AvatarSection() {
     <div id="avatar-section" className="avatar-section" style={{ position: 'relative', zIndex: 10, width: '100%', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
       <div className="avatar-bg" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: '#050816', zIndex: -1 }}></div>
       
+      {/* Interaction Hint */}
+      <div className="avatar-hint" style={{
+        position: 'absolute',
+        bottom: '10%',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 15,
+        color: 'rgba(255, 255, 255, 0.5)',
+        fontSize: '0.9rem',
+        letterSpacing: '3px',
+        textTransform: 'uppercase',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+        opacity: 0, // GSAP will fade it in
+      }}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 9l4 4-4 4"/>
+          <path d="M19 9l-4 4 4 4"/>
+          <circle cx="12" cy="13" r="2"/>
+        </svg>
+        Move or tap anywhere to interact
+      </div>
+
       {/* Three Canvas ONLY - No extra text */}
       <canvas ref={canvasRef} className="webgl" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }}></canvas>
     </div>
