@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Experience from './pages/Experience'
 import Contact from './pages/Contact'
+import AvatarSection from './pages/AvatarSection'
 import gsap from 'gsap'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import './App.css'
@@ -34,6 +35,7 @@ const App = () => {
      <Home />
      <About />
      <Experience />
+     <AvatarSection />
      <Contact />
    </>
   )

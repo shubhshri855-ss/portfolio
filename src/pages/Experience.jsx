@@ -209,14 +209,14 @@ export default function Experience() {
           pin: true,
           onUpdate: (self) => {
             const expEl = document.getElementById("experience");
-            const contactEl = document.getElementById("contact");
-            if (expEl && contactEl) {
+            const nextEl = document.getElementById("avatar-section");
+            if (expEl && nextEl) {
               if (self.progress > 0.85) {
                 expEl.style.pointerEvents = "none";
-                contactEl.style.zIndex = "20"; // Bring Contact to the very front so nothing can block it
+                nextEl.style.zIndex = "20"; // Bring Avatar to the very front so nothing can block it
               } else {
                 expEl.style.pointerEvents = "auto";
-                contactEl.style.zIndex = "5"; // Put it back behind Experience
+                nextEl.style.zIndex = "5"; // Put it back behind Experience
               }
             }
           }
